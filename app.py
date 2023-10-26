@@ -220,10 +220,10 @@ def update_graph_styles(figure):
 df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
 
 # Filter for games on Saturday and Sunday
-df = df[df['Day'].isin(['Saturday', 'Sunday'])]
+weekend_games_df = df[df['Day'].isin(['Saturday', 'Sunday'])]
 
 # Aggregate data by 'Start Time' and 'Day' to get average attendance
-agg_attendance = df.groupby(['Day', 'Start Time'])['Actual Crowd'].mean().reset_index()
+agg_attendance = weekend_games_df.groupby(['Day', 'Start Time'])['Actual Crowd'].mean().reset_index()
 
 # Compute the overall average attendance
 overall_avg_attendance = df['Actual Crowd'].mean()
@@ -364,20 +364,17 @@ def update_graph(selected_day):
 
     
     fig3.add_shape(
-        go.layout.Shape(
-            type="line",
-            x0=0,
-            x1=1,
-            y0=overall_avg_attendance,
-            y1=overall_avg_attendance,
-            xref="paper",
-            yref="y",
-            line=dict(
-                color="Red",
-                width=3,
-                dash="dashdot",
-            )
+        type="line",
+        x0=agg_attendance['Start Time'].iloc[0],  # starting from the first Start Time
+        x1=agg_attendance['Start Time'].iloc[-1],  # ending at the last Start Time
+        y0=overall_avg_attendance,
+        y1=overall_avg_attendance,
+        line=dict(
+            color="Red",
+            width=4,
+            dash="dashdot",
         )
+    )
     )
 
   
