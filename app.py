@@ -1,4 +1,4 @@
-python3 -m pip3 install --upgrade pip3
+
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
 import plotly.express as px
