@@ -90,35 +90,7 @@ grouped_data.loc[grouped_data['Year'] == 2011, 'Ladder Position'] = 1
 X = grouped_data[['PrevYearLadderPosition']]
 y = grouped_data['Actual Crowd']
 
-file_path2 = '/Users/nathanfoale/Desktop/collingwood/AFL_Data.xlsx'
-df2 = pd.read_excel(file_path2, engine='openpyxl')
 
-df2 = df2[df2['Date'].astype(str).str.match(r'\d{2}-\d{2}-\d{4}')]
-df2['Date'] = pd.to_datetime(df['Date'], dayfirst=True)
-
-venue_corrections = {
-    'S.C.G.': 'SCG',
-    'Football': 'Football Park',
-    'Stadium': 'Stadium Australia',
-    'Sydeny Show GroundS': 'Sydney Showground',
-    ' Subiaco': 'Subiaco',
-    'Adelaide': 'Adelaide Oval',
-    'Marrara': 'Marrara Oval',
-    'Kardinia': 'GMHBA Stadium',
-    'Kardinia Park': 'GMHBA Stadium',
-    'Docklands': 'Marvel Stadium',
-    'Subiaco': 'Subiaco',
-    'Manuka': 'Manuka Oval',
-    'Kardina Park': 'GMHBA',
-    'Traeger Park': 'TIO Traeger Park',
-    
-
-
-    
-}
-
-# correcting the venue names
-df2['Venue'] = df2['Venue'].replace(venue_corrections)
 
 model = LinearRegression()
 model.fit(X, y)
@@ -289,9 +261,6 @@ for graph in graphs:
 
 dropdown_style = {'backgroundColor': 'palegoldenrod', 'color': 'black'}  
 
-image_path = '/Users/nathanfoale/assets/Collingwood-Logo.png'
-
-image_filename = 'collingwood.png'
 
 
 
