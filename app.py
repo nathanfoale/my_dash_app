@@ -15,6 +15,10 @@ import base64
 from flask import request
 import os
 
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
+
+
 # current directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -24,8 +28,7 @@ file_path = os.path.join(BASE_DIR, 'Collingwood_Home_Games_Formatted.xlsx')
 # now you can read the file as pandas dataframe
 df = pd.read_excel(file_path, engine='openpyxl')
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-server = app.server
+
 
 # Now, you can define routes using the Flask app
 # Now, you can add endpoints to the Flask server for handling POST and GET requests.
