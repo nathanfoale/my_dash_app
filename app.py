@@ -62,7 +62,7 @@ def handle_requests():
 #app = Dash(__name__)
 
 # Load data
-file_path = '/Users/nathanfoale/collingwood/Collingwood_Home_Games_Formatted.xlsx'
+file_path = '/Users/nathanfoale/Desktop/collingwood/Collingwood_Home_Games_Formatted.xlsx'
 df = pd.read_excel(file_path, engine='openpyxl')
 
 df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
