@@ -375,7 +375,7 @@ def update_graph(selected_day):
             dash="dashdot",
         )
     )
-    )
+    
 
   
     fig3.update_layout(
