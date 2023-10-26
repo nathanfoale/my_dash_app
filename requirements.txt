@@ -152,5 +152,5 @@ webencodings
 websocket-client
 Werkzeug
 widgetsnbextension
-xyzservices==2023.10.0
-zipp==3.17.0
+xyzservices
+zipp
