@@ -25,21 +25,20 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # path to the Excel file (assuming it's in the same directory as your Python script)
 file_path = os.path.join(BASE_DIR, 'Collingwood_Home_Games_Formatted.xlsx')
 
-# now you can read the file as pandas dataframe
+
 df = pd.read_excel(file_path, engine='openpyxl')
 
 
 
-# Now, you can define routes using the Flask app
-# Now, you can add endpoints to the Flask server for handling POST and GET requests.
+
 @server.route('/your-endpoint', methods=['POST', 'GET'])
 def handle_requests():
     if request.method == 'POST':
         # handle POST request here
         try:
             data = request.json
-            # process your data, e.g., log it, store it, or trigger some other actions
-            response = {"message": "Success, data received!"}  # customize as needed
+            
+            response = {"message": "Success, data received!"}  
             return jsonify(response)
 
         except Exception as e:
@@ -47,9 +46,9 @@ def handle_requests():
             return jsonify(response), 400
 
     elif request.method == 'GET':
-        # handle GET request here
+        
         try:
-            # perhaps you're retrieving and sending back some data in this GET request
+            
             data_to_return = {"key": "This is a response from a GET request"}
             return jsonify(data_to_return)
 
@@ -58,11 +57,11 @@ def handle_requests():
             return jsonify(response), 400
 
     else:
-        # Method not accounted for, return an error message
+        
         return "Invalid request method", 405
 
 
-#app = Dash(__name__)
+
 
 # Load data
 file_path = "Collingwood_Home_Games_Formatted.xlsx"
@@ -216,25 +215,25 @@ def update_graph_styles(figure):
         font=dict(color='black')
     )
 
-# Convert 'Date' column to datetime format
+
 df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
 
-# Filter for games on Saturday and Sunday
+# filter for games on Saturday and Sunday
 weekend_games_df = df[df['Day'].isin(['Saturday', 'Sunday'])]
 
-# Aggregate data by 'Start Time' and 'Day' to get average attendance
+
 agg_attendance = weekend_games_df.groupby(['Day', 'Start Time'])['Actual Crowd'].mean().reset_index()
 
-# Compute the overall average attendance
+
 overall_avg_attendance = df['Actual Crowd'].mean()
 
-# Bar chart for average attendance based on match timing and day
+# bar chart for average attendance based on match timing and day
 fig3 = px.bar(agg_attendance, x='Start Time', y='Actual Crowd', color='Start Time',
              facet_col='Day',
              title='Average Attendance based on Match Timing and Day for Collingwood Home Games',
              labels={'Start Time': 'Match Timing', 'Actual Crowd': 'Average Attendance'})
 
-# Add a horizontal dotted line for the overall average attendance in each facet
+# red dotted line for the overall average attendance in each facet
 for i in range(1, len(fig3.layout.annotations) + 1):
     fig3.add_shape(
         go.layout.Shape(
@@ -247,11 +246,10 @@ for i in range(1, len(fig3.layout.annotations) + 1):
         )
     )
 
-# Adjust bargap to remove gaps within bars of each day
 fig3.update_layout(bargap=0)
 fig3.update_xaxes(tickangle=-45)
 
-# Update x-axis for each subplot based on available data points
+
 days = ['Saturday', 'Sunday']
 for index, day in enumerate(days, start=1):
     unique_times = agg_attendance[agg_attendance['Day'] == day]['Start Time'].unique()
@@ -282,7 +280,7 @@ app.layout = dbc.Container([
     #html.Img(src='/Users/nathanfoale/assets/penguins.png')
 ),
     ]),
-    # Row for the first two graphs
+    # row for the first two graphs
     dbc.Row([
 
         dbc.Col(dcc.Graph(id='attendance-vs-ending-ladder-graph',
@@ -297,13 +295,13 @@ app.layout = dbc.Container([
         dbc.Col(dcc.Graph(id='ladder-graph', figure=ladder_fig), width=6, className="mb-4"),
 
     ]),
-    # Row for the bottom two graphs
+    # row for the bottom two graphs
     dbc.Row([
         dbc.Col(dcc.Graph(id='attendance-graph', figure=fig1), width=6, className="mb-4"),
         dbc.Col(dcc.Graph(id='box-whisker-graph', figure=box_whisker_fig), width=6, className="mb-4")
     ]),
     dbc.Row([
-        # Column for dropdown
+        
         dbc.Col([
             html.Div(  
                 dcc.Dropdown(
